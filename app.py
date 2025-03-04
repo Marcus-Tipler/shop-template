@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql import func
+# from sqlalchemy.sql import func
 import os
 from flask.sessions import SecureCookieSessionInterface
 from itsdangerous import URLSafeTimedSerializer
@@ -56,6 +56,9 @@ class usercarts(db.Model):
         self.userID = 0
         self.itemIDs = None
         self.amount = 0
+
+with app.app_context():
+    db.create_all()
 
 class SimpleSecureCookieSessionInterface(SecureCookieSessionInterface):
 	# Override method
@@ -161,5 +164,4 @@ def testPage():
     return render_template('test.html', technologies = technologies.query.all(), usercart = usercarts.query.filter_by(userID = g.user._id))
 
 if __name__ == '__main__':
-    db.create_all()
     app.run(debug=True)
