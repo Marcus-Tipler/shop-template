@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+    
+{% block content %}
+
+{% block alert %} {% endblock %}
+
+    <div class="mft-carousel">
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+              <img src="{{ url_for('static', filename='assets/images/ad1.gif') }}" style="width:100%">
+            </div>
+            
+            <div class="mySlides fade">
+              <img src="{{ url_for('static', filename='assets/images/ad2.gif') }}" style="width:100%">
+            </div>
+            
+            <div class="mySlides fade">
+              <img src="{{ url_for('static', filename='assets/images/ad3.gif') }}" style="width:100%">
+            </div>
+            
+            </div>
+            <br>
+            
+            <div style="text-align:center">
+              <span class="dot"></span> 
+              <span class="dot"></span> 
+              <span class="dot"></span> 
+            </div>
+    </div>
+
+
+    <div class="mft-product-line">
+        <div class="mft-product" id="mft.description">
+            <h2>Check out our best services!</h2>
+            <button class="mft-advertise-button"><a href="{{ url_for('productPage') }}">SHOP</a></button>
+        </div>
+        {% for tech in technologies %}
+            {% set id = tech._id | int %}
+            {% if id > 3 %}
+            {% else %}
+                <div class="mft-product" id="product-{{tech._id}}" onclick="location.href='/tech/{{tech._id}}';" style="cursor: pointer;">
+                    <div class="mft-product-image-container">
+                        <img class="mft-product-image" src="{{ url_for('static', filename='assets/images/product-' + tech._id + '.png')}}">
+                    </div>
+                    <div class="mft-product-info">
+                        <h4>{{ tech.name }}</h4>
+                        <p>{{ tech.price }}</p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='assets/scripts/carousel.js') }}"></script>
+{% endblock %}
