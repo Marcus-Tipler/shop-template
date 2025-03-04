@@ -1,0 +1,158 @@
+:root {
+    --mft-primary-brand: #EB5B00;
+    --mft-secondary-brand: #c84e02;
+    --mft-text-one: #ffffff;
+    --mft-text-two: #F1F1F1;
+    --mft-text-header: #1e1e1e;
+    --mft-background-one: #030303;
+    --mft-background-two: #1e1e1e;
+}
+
+html,
+body {
+    background-color: var(--mft-background-two);
+    color: var(--mft-text-two);
+    font-family: Helvetica, sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.mft-header {
+    background-color: var(--mft-primary-brand);
+    display: grid;
+    grid: 80px / 30% auto 30%;
+    padding: 10px 20px;
+    align-items: center; /* vertically align items in header */
+    text-align: center;
+}
+.mft-header-left {
+}
+.mft-header-middle {
+}
+.mft-header-right {
+}
+  
+.mft-logo {
+    height: 75px
+}
+
+.mft-header-button {
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+}
+.mft-header-button a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--mft-text-header);
+    fill: var(--mft-text-header);
+    font-size: 15px;
+}
+.mft-header-button:enabled {
+    background: var(--mft-primary-brand);
+}
+.mft-header-button:hover {
+    background: var(--mft-secondary-brand);
+}
+
+.mft-product-line {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    background-color: dodgerblue;
+    padding: 10px;
+}
+.mft-product-line > div {
+    background-color: dodgerblue;
+    border: 1px solid black;
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    overflow: hidden;
+}
+.mft-product-image {
+    width: 100%;
+}
+
+
+.mft-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.mft-dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: var(--mft-text-one);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.mft-dropdown-menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.mft-dropdown-menu a:hover {
+    background-color: var(--mft-text-two);
+}
+.mft-dropdown-container:hover .mft-dropdown-menu {
+    display: block;
+}
+.mft-dropdown-container:hover #mft-account-button {
+    background: var(--mft-secondary-brand);
+}
+
+.mft-counter {
+    background-color: black;
+    color: white;
+    padding: 2px;
+    border-radius: 5px;
+    vertical-align: bottom;
+}
+
+.mft-single-product {
+    display: inline-grid;
+    grid-template-columns: auto;
+    color: var(--mft-text-one);
+    fill: var(--mft-text-one);
+}
+.mft-single-product-self {
+    display: grid;
+    grid: 80px / 50% 50%;
+    height: 110vh;
+}
+
+.mft-s-p-left {
+    padding: 10px;
+}
+.mft-s-p-right {
+    padding: 10px;
+}
+.mft-s-p-left img {
+    width: 100%;
+}
+.mft-s-p-description {
+    padding: 10px;
+}
+
+.mft-s-p-sellerinfo {
+    display: grid;
+    grid: 80px / 10% 90%;
+    height: 150px
+}
+.mft-s-p-sellerinfo-img img {
+    height: 100px;
+    width: 100px;
+}
+
+.mft-carousel {
+    padding: 20px;
+}
+
+.mft-footer {
+    display: grid;
+    padding: 10px 20px;
+    text-align: center;
+}

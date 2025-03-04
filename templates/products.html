@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<div class="mft-product-line">
+    {% for tech in technologies %}
+        <div class="mft-product" id="product-{{tech._id}}" onclick="location.href='/tech/{{tech._id}}';" style="cursor: pointer;">
+            <div class="mft-product-image-container">
+                <img class="mft-product-image" src="{{ url_for('static', filename='assets/images/product-' + tech._id + '.png')}}">
+            </div>
+            <div class="mft-product-info">
+                <h4>{{ tech.name }}</h4>
+                <p>{{ tech.price }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
