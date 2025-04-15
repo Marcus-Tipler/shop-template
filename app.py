@@ -1,64 +1,94 @@
 from flask import Flask, render_template, request, url_for, redirect, make_response, session, g
 from flask_wtf import FlaskForm
+from dataclasses import dataclass
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
-# from sqlalchemy.sql import func
 import os
 from flask.sessions import SecureCookieSessionInterface
 from itsdangerous import URLSafeTimedSerializer
 import datetime
+from flask_admin import Admin
+from weasyprint import HTML
+
+from admin.adminTechnologies import adminTechnologies # Imports templates from the Admin Folder
+from admin.adminUsers import adminUsers # Imports templates from the Admin Folder
+from admin.adminUsercarts import adminUsercarts # Imports templates from the Admin Folder
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__)
+
 SECRET_KEY = "top_secret_password_dont_tell_anyone_this"
 app.config['SECRET_KEY'] = SECRET_KEY
-
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 
 db = SQLAlchemy(app)
 
+
+@dataclass
 class technologies(db.Model):
+    _id = int
+    name = str
+    price = int
+    description = str
+    seller = str
+    reviews = int
+
     _id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column("name", db.String)
+    name = db.Column("name", db.String(255))
     price = db.Column("price", db.Integer)
-    description = db.Column("description", db.String)
-    seller = db.Column("seller", db.String)
+    description = db.Column("description", db.Text)
+    seller = db.Column("seller", db.String(255))
     reviews = db.Column("reviews", db.Integer)
-    def __init__(self, name, taught, description):
-        self.name = name
-        self.taught = taught
-        self.description = description
-        self.reviews = 0
-        self.seller = "unknown"
+    
+
+@dataclass
 class users(db.Model):
+    _id = int
+    username = str
+    realname = str
+    surname = str
+    email = str
+    password = str
+
     _id = db.Column("ID", db.Integer, primary_key=True)
-    username = db.Column("Username", db.String)
-    realname = db.Column("Name", db.String)
-    surname = db.Column("Surname", db.String)
-    email = db.Column("Email", db.String)
-    password = db.Column("Password", db.String)
-    def __init__(self, username, realname, surname, email, password):
-        self.realname = realname
-        self.username = username
-        self.surname = surname
-        self.email = email
-        self.password = password
+    username = db.Column("Username", db.String(255))
+    realname = db.Column("Name", db.String(255))
+    surname = db.Column("Surname", db.String(255))
+    email = db.Column("Email", db.String(255))
+    password = db.Column("Password", db.Text)
+
+
+@dataclass
 class usercarts(db.Model):
+    _id = int
+    userID = int
+    itemIDs = int
+    amount = int
+
     _id = db.Column("id", db.Integer, primary_key=True)
-    userID = db.Column("userid", db.Integer, db.ForeignKey("users._id"))
-    itemIDs = db.Column("itemid", db.Integer, db.ForeignKey('technologies._id'))
     amount = db.Column("amount", db.Integer)
-    def __init__(self, itemIDs, userID, amount):
-        self.userID = 0
-        self.itemIDs = None
-        self.amount = 0
+
+    userID = db.Column("userid", db.Integer, db.ForeignKey("users.ID"), nullable=False)
+    user = db.relationship("users", backref=db.backref("usercarts", lazy=True))
+    itemIDs = db.Column("itemid", db.Integer, db.ForeignKey('technologies.id'), nullable=False)
+    item = db.relationship("technologies", backref=db.backref("usercarts", lazy=True))
+
 
 with app.app_context():
     db.create_all()
+
+
+admin = Admin(app, name='Policy Admin', template_mode='bootstrap4')
+admin.add_view(adminTechnologies(technologies, db.session))
+admin.add_view(adminUsers(users, db.session))
+admin.add_view(adminUsercarts(usercarts, db.session))
+
 
 class SimpleSecureCookieSessionInterface(SecureCookieSessionInterface):
 	# Override method
@@ -86,6 +116,7 @@ def encodeFlaskCookie(secret_key, cookieDict):
 	signingSerializer = sscsi.get_signing_serializer(secret_key)
 	return signingSerializer.dumps(cookieDict)
 
+
 @app.before_request
 def before_request():
     session.permanent = True
@@ -101,27 +132,33 @@ class OpinionForm(FlaskForm):
     opinion = StringField('Your Opinion: ',validators = [DataRequired(),Length(min=0,max=100)])
     submit = SubmitField('Submit')
 
+
 @app.route('/')
 def galleryPage():
     return render_template('index.html', technologies = technologies.query.all())
+
 
 @app.route('/tech/<int:techId>',methods=['GET','POST'])
 def singleProductPage(techId):
     tech = db.get_or_404(technologies, techId)
     return render_template('SingleTech.html', technology = tech)
 
+
 @app.route('/cart/')
 def cartPage():
     usercart = usercarts.query.filter_by(userID = g.user._id)
     return render_template('cart.html', technologies = technologies.query.all(), usercart = usercart)
 
+
 @app.route('/products/')
 def productPage():
     return render_template('products.html', technologies = technologies.query.all())
 
+
 @app.route('/references/')
 def referencePage():
     return render_template('references.html')
+
 
 @app.route('/gateway/', methods=['GET', 'POST'])
 def loginPage():
@@ -141,13 +178,17 @@ def loginPage():
         session_cookie = encodeFlaskCookie(SECRET_KEY, dict(session))
         return render_template('gateway.html')
     
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html', technologies = technologies.query.all(), error = error), 404
 
+
 @app.errorhandler(505)
 def page_not_found(error):
     return render_template('505.html', technologies = technologies.query.all(), error = error), 505
+
+
 @app.errorhandler(500)
 def page_not_found(error):
     return render_template('505.html', technologies = technologies.query.all(), error = error), 500
@@ -159,9 +200,10 @@ def page_not_found(error):
 #     decodedDict = decodeFlaskCookie(SECRET_KEY, session_cookie)
 #     return render_template('test.html', cookie = session_cookie, d_cookie = decodedDict, session = session.get('userid'))
 
+
 @app.route('/test/')
 def testPage():
     return render_template('test.html', technologies = technologies.query.all(), usercart = usercarts.query.filter_by(userID = g.user._id))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True,host='0.0.0.0',port=5000)
