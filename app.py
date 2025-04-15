@@ -32,6 +32,7 @@ db = SQLAlchemy(app)
 
 @dataclass
 class technologies(db.Model):
+    __tablename__ = 'technologies'
     _id = int
     name = str
     price = int
@@ -45,10 +46,14 @@ class technologies(db.Model):
     description = db.Column("description", db.Text)
     seller = db.Column("seller", db.String(255))
     reviews = db.Column("reviews", db.Integer)
+
+    def __str__(self):
+        return f"{self.name} / {self.price} / {self.description} / {self.seller} / {self.reviews}"
     
 
 @dataclass
 class users(db.Model):
+    __tablename__ = 'users'
     _id = int
     username = str
     realname = str
@@ -63,9 +68,13 @@ class users(db.Model):
     email = db.Column("Email", db.String(255))
     password = db.Column("Password", db.Text)
 
+    def __str__(self):
+        return f"{self.username} / {self.realname} / {self.surname} / {self.email} / {self.password}"
+
 
 @dataclass
 class usercarts(db.Model):
+    __tablename__ = 'usercarts'
     _id = int
     userID = int
     itemIDs = int
@@ -79,12 +88,15 @@ class usercarts(db.Model):
     itemIDs = db.Column("itemid", db.Integer, db.ForeignKey('technologies.id'), nullable=False)
     item = db.relationship("technologies", backref=db.backref("usercarts", lazy=True))
 
+    def __str__(self):
+        return f"{self.amount}"
+
 
 with app.app_context():
     db.create_all()
 
 
-admin = Admin(app, name='Policy Admin', template_mode='bootstrap4')
+admin = Admin(app, name='Database Admin', template_mode='bootstrap4')
 admin.add_view(adminTechnologies(technologies, db.session))
 admin.add_view(adminUsers(users, db.session))
 admin.add_view(adminUsercarts(usercarts, db.session))
@@ -206,4 +218,7 @@ def testPage():
     return render_template('test.html', technologies = technologies.query.all(), usercart = usercarts.query.filter_by(userID = g.user._id))
 
 if __name__ == '__main__':
-	app.run(debug=True,host='0.0.0.0',port=5000)
+	app.run(
+          debug=True,
+          host='0.0.0.0',
+          port=5000)
