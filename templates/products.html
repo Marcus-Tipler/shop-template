@@ -1,18 +1,62 @@
 {% extends "base.html" %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/products.css') }}">
+{% endblock %}
+
+
 {% block content %} 
-<div class="mft-product-line">
-    {% for tech in technologies %}
-        <div class="mft-product" id="product-{{tech._id}}" onclick="location.href='/tech/{{tech._id}}';" style="cursor: pointer;">
-            <div class="mft-product-image-container">
-                <img class="mft-product-image" src="{{ url_for('static', filename='assets/images/product-' + tech._id + '.png')}}">
+    <div class="mft-products">
+
+        <div class="mft-product-filters">
+            <h2>Filter by:</h2>
+            <div class="mft-product-filter">
+                <label for="category">Category:</label>
+                <select id="category" name="category">
+                    <option value="all">All</option>
+                    <option value="CategoryOne">CategoryOneTitle</option>
+                    <option value="CategoryTwo">CategoryOneTwo</option>
+                    <option value="CategoryThree">CategoryOneThree</option>
+                </select>
+                <form method="POST" action="/products">
+                {{ form.search }}
+                {{ form.choices }}
+                <button>Submit</button>
+                </form>
             </div>
-            <div class="mft-product-info">
-                <h4>{{ tech.name }}</h4>
-                <p>{{ tech.price }}</p>
+            <div class="mft-product-filter">
+                <label for="price">Price:</label>
+                <select id="price" name="price">
+                    <option value="all">All</option>
+                    <option value="low-to-high">Low to High</option>
+                    <option value="high-to-low">High to Low</option>
+                </select>
             </div>
         </div>
-    {% endfor %}
-</div>
+
+        <div class="mft-product-viewfinder">
+
+            <div class="mft-product-search">
+                <input type="text" id="search" name="search" placeholder="Search for products...">
+                <button type="submit">Search</button>
+            </div>
+
+            <div class="mft-product-line">
+                {% for tech in technologies %}
+                    <div class="mft-product" id="product-{{tech._id}}" onclick="location.href='/tech/{{tech._id}}';" style="cursor: pointer;">
+                        <div class="mft-product-image-container">
+                            <img class="mft-product-image" src="{{ url_for('static', filename='assets/images/product-' + tech._id + '.png')}}">
+                        </div>
+                        <div class="mft-product-info">
+                            <h4>{{ tech.name }}</h4>
+                            <p>{{ tech.price }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
 {% endblock %}
 

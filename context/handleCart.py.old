@@ -1,0 +1,9 @@
+from flask import Blueprint, render_template, session, g
+from context.database import db, technologies, users, usercarts # Imports blueprints from context folder.
+import datetime
+
+handleCart = Blueprint('handleCart', __name__, template_folder='templates')
+
+@handleCart.route('/test', methods=['GET'])
+def test():
+    return render_template('test.html')
