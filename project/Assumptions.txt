@@ -1,0 +1,3 @@
+In SECTION #2:
+Assumption made that the HOME PAGE can be used to access a PRODUCTS PAGE 
+where all the filtering can be achieved.

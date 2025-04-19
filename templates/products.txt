@@ -1,0 +1,17 @@
+<div class="mft-product-filter">
+                <label for="category">Category:</label>
+                <select id="category" name="category">
+                    <option value="all">All</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mft-product-filter">
+                <label for="price">Price:</label>
+                <select id="price" name="price">
+                    <option value="all">All</option>
+                    <option value="low-to-high">Low to High</option>
+                    <option value="high-to-low">High to Low</option>
+                </select>
+            </div>

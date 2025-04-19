@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-    
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/index.css') }}">
+{% endblock %}
+
 {% block content %}
 
 {% block alert %} {% endblock %}
@@ -19,14 +23,14 @@
               <img src="{{ url_for('static', filename='assets/images/ad3.gif') }}" style="width:100%">
             </div>
             
-            </div>
-            <br>
+        </div>
+        <br>
             
-            <div style="text-align:center">
-              <span class="dot"></span> 
-              <span class="dot"></span> 
-              <span class="dot"></span> 
-            </div>
+        <div style="text-align:center">
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+            <span class="dot"></span> 
+        </div>
     </div>
 
 

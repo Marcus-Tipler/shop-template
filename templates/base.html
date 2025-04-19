@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/base.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/carousel.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/alerts.css') }}">
+{% block styles %}{% endblock %}
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 

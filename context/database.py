@@ -14,6 +14,7 @@ class technologies(db.Model):
     description = str
     seller = str
     reviews = int
+    env_impact = int
 
     _id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column("name", db.String(255))
@@ -21,6 +22,7 @@ class technologies(db.Model):
     description = db.Column("description", db.Text)
     seller = db.Column("seller", db.String(255))
     reviews = db.Column("reviews", db.Integer)
+    env_impact = db.Column("env_impact", db.Integer)
 
     def __str__(self):
         return f"{self.name} / {self.price} / {self.description} / {self.seller} / {self.reviews}"
