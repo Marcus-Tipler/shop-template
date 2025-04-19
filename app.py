@@ -135,8 +135,12 @@ def productPage():
     if request.method == 'POST':
     # if form.validate_on_submit():
         selected_technologies = request.form.getlist('choices')
-        selected_technologies = [int(tech_id) for tech_id in selected_technologies]
-        selected_technologies = technologies.query.filter(technologies._id.in_(selected_technologies)).all()
+        selected_technologies = [int(tech_id) for tech_id in selected_technologies] # Get the ID values from the form
+        env_impact_threshold = form.env_impact.data # Get the slider value for environmental impact
+        selected_technologies = technologies.query.filter(
+            technologies._id.in_(selected_technologies),
+            technologies.env_impact <= env_impact_threshold
+        ).all()
         for tech in selected_technologies:
             print(tech)
         return render_template('products.html', technologies = selected_technologies, form = form)

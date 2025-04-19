@@ -18,11 +18,20 @@
                     <option value="CategoryTwo">CategoryOneTwo</option>
                     <option value="CategoryThree">CategoryOneThree</option>
                 </select>
+
                 <form method="POST" action="/products">
+
                 {{ form.search }}
                 {{ form.choices }}
+
+                {{ form.env_impact.label }} 
+                {{ form.env_impact(oninput="updateSliderValue(this.value)") }}
+                <span id="sliderValue">{{ form.env_impact.data }}</span>
+
                 <button>Submit</button>
+
                 </form>
+
             </div>
             <div class="mft-product-filter">
                 <label for="price">Price:</label>
@@ -60,3 +69,6 @@
     </div>
 {% endblock %}
 
+{% block scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename='assets/scripts/products.js') }}"></script>
+{% endblock %}
