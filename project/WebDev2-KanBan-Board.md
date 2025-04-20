@@ -7,17 +7,13 @@ kanban-plugin: board
 ## Backlog
 
 - [ ] ```java
-	REQUIREMENT
-	```
-	SHOPPING BASKET MUST BE FUNCTIONAL
-- [ ] ```java
-	REQUIREMENT
-	```
-	Search Algorithm
-- [ ] ```java
 	Additional
 	```
 	Recommendation Algorithm
+- [ ] ```java
+	Additional
+	```
+	ProductsPage should have a page selector and maximise the outputs to page size
 - [ ] ```java
 	REQUIREMENT
 	```
@@ -26,10 +22,6 @@ kanban-plugin: board
 	Should (additional marks)
 	```
 	AJAX USED FOR PAGE SUMMARY IN FRONT PAGE
-- [ ] ```java
-	REQUIREMENT
-	```
-	Search Filters must be implemented
 - [ ] ```java
 	REQUIREMENT
 	```
@@ -42,10 +34,22 @@ kanban-plugin: board
 	REQUIREMENT
 	```
 	Store HASHED passwords in Database
+
+
+## BUGS
+
 - [ ] ```java
 	BUG
 	```
-	Remove the datav-base parameter in Jinja on Front Page Index.html
+	Remove the database parameter in Jinja on Front Page Index.html
+- [ ] ```java
+	BUG
+	```
+	Environmental Impact on ProductsPage bugs to value of 0 for value 100
+- [ ] ```java
+	BUG
+	```
+	Price on ProductsPage needs increased maximum or replacement to user input based interpretation
 
 
 ## Blocked
@@ -55,6 +59,38 @@ kanban-plugin: board
 ## In progress
 
 - [ ] ```java
+	REQUIREMENT
+	```
+	SHOPPING BASKET MUST BE FUNCTIONAL
+	
+	----
+	
+	Each preview item on Products.HTML and Index.HTML need to have a purchase button. 
+	
+	The cart should have preview images, and other product information.
+	
+	The cart should have two segments, a preview section and an overview section.
+	
+	The overview section should add up the prices and show an overview of the purchase. It should also place an address or other information on the user.
+- [ ] Commenting on previously made code for handleProducts.py needs to be completed.
+
+
+## PR Ready
+
+
+
+## Complete
+
+**Complete**
+- [x] ```java
+	REQUIREMENT
+	```
+	Search Algorithm
+- [x] ```java
+	REQUIREMENT
+	```
+	Search Filters must be implemented
+- [x] ```java
 	REQUIREMENT
 	```
 	ENVIRONMENTAL IMPACT IS REQUIRED FOR EACH ITEM:
@@ -71,15 +107,6 @@ kanban-plugin: board
 	• Reviews
 	```
 	according to documentation.
-
-
-## PR Ready
-
-
-
-## Complete
-
-**Complete**
 - [x] Creation of compartmentalised files
 
 
@@ -87,6 +114,6 @@ kanban-plugin: board
 
 %% kanban:settings
 ```
-{"kanban-plugin":"board","list-collapse":[false,false,false,false,false]}
+{"kanban-plugin":"board","list-collapse":[false,false,false,false,false,false]}
 ```
 %%
