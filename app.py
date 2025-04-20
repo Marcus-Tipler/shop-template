@@ -22,7 +22,7 @@ from weasyprint import HTML
 from admin.adminTechnologies import adminTechnologies # Imports templates from the Admin Folder
 from admin.adminUsers import adminUsers # Imports templates from the Admin Folder
 from admin.adminUsercarts import adminUsercarts # Imports templates from the Admin Folder
-from context.database import db, technologies, users, usercarts # Imports blueprints from context folder.
+from context.database import db, technologies, users, usercarts, sellers # Imports blueprints from context folder.
 # from context.handleCart import handleCart
 from context.handleProducts import handleProductForms
 
@@ -128,18 +128,40 @@ def cartPage():
 @app.route('/products/', methods=['GET', 'POST'])
 def productPage():
     form = handleProductForms()
-    form.choices.choices = [(tech._id, tech.name) for tech in technologies.query.all()]
-    for tech in technologies.query.all():
-        print(tech._id, tech.name)
-    print('\n')
+    sellersname = db.session.query(sellers.seller_name, sellers._id).group_by(sellers._id).all()
+    form.formSellers.choices = [(seller[1], seller[0]) for seller in sellersname]
+    for seller, id in sellersname:
+        print(seller, id)
+    print('\n', form.formSellers.choices)
+
     if request.method == 'POST':
-    # if form.validate_on_submit():
-        selected_technologies = request.form.getlist('choices')
-        selected_technologies = [int(tech_id) for tech_id in selected_technologies]
-        selected_technologies = technologies.query.filter(technologies._id.in_(selected_technologies)).all()
-        for tech in selected_technologies:
+        selected_sellers = request.form.getlist('formSellers')
+        print(selected_sellers)
+        for id in selected_sellers:
+            print("FILTER", technologies.query.filter_by(seller_id = id))
+
+        selected_sellers = [int(id) for id in selected_sellers]
+
+        env_impact_threshold = form.env_impact.data # Get the slider value for environmental impact
+
+        selected_reviews = form.reviews.data
+
+        min_price = form.minPrice.data
+        max_price = form.maxPrice.data
+
+        selected_sellers = technologies.query.filter(
+            technologies.seller_id.in_(selected_sellers),
+            technologies.env_impact <= env_impact_threshold,
+            technologies.reviews >= selected_reviews,
+            technologies.price >= min_price,
+            technologies.price <= max_price
+        ).all()
+        for tech in selected_sellers:
             print(tech)
-        return render_template('products.html', technologies = selected_technologies, form = form)
+        return render_template('products.html', technologies = selected_sellers, form = form)
+    else:
+        form.formSellers.data = [seller[1] for seller in sellersname]
+        form.reviews.data = 0
     return render_template('products.html', technologies = technologies.query.all(), form = form)
 
 @app.route('/references/')

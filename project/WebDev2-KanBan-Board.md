@@ -42,11 +42,14 @@ kanban-plugin: board
 	REQUIREMENT
 	```
 	Store HASHED passwords in Database
+- [ ] ```java
+	BUG
+	```
+	Remove the datav-base parameter in Jinja on Front Page Index.html
 
 
 ## Blocked
 
-- [ ] Creation of compartmentalised files
 
 
 ## In progress
@@ -65,6 +68,7 @@ kanban-plugin: board
 	• Picture 
 	• Price
 	• Measure of environmental impact e.g. carbon or ecological footprint
+	• Reviews
 	```
 	according to documentation.
 
@@ -76,6 +80,7 @@ kanban-plugin: board
 ## Complete
 
 **Complete**
+- [x] Creation of compartmentalised files
 
 
 
