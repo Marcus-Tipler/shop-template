@@ -134,31 +134,28 @@ def productPage():
         print(seller, id)
     print('\n', form.formSellers.choices)
 
+    query = technologies.query
+
     if request.method == 'POST':
+        search_query = request.form.get('search', '').strip()
+        if search_query:
+            query = query.filter(technologies.name.ilike(f"%{search_query}%"))
+
         selected_sellers = request.form.getlist('formSellers')
-        print(selected_sellers)
-        for id in selected_sellers:
-            print("FILTER", technologies.query.filter_by(seller_id = id))
-
         selected_sellers = [int(id) for id in selected_sellers]
-
-        env_impact_threshold = form.env_impact.data # Get the slider value for environmental impact
-
+        env_impact_threshold = form.env_impact.data
         selected_reviews = form.reviews.data
-
         min_price = form.minPrice.data
         max_price = form.maxPrice.data
 
-        selected_sellers = technologies.query.filter(
+        query = query.filter(
             technologies.seller_id.in_(selected_sellers),
             technologies.env_impact <= env_impact_threshold,
             technologies.reviews >= selected_reviews,
             technologies.price >= min_price,
             technologies.price <= max_price
         ).all()
-        for tech in selected_sellers:
-            print(tech)
-        return render_template('products.html', technologies = selected_sellers, form = form)
+        return render_template('products.html', technologies = query, form = form)
     else:
         form.formSellers.data = [seller[1] for seller in sellersname]
         form.reviews.data = 0
