@@ -8,9 +8,10 @@ class MultipleFieldWithCheckboxes(SelectMultipleField):
 
 class handleProductForms(FlaskForm):
     search = StringField('Search')
-    choices = MultipleFieldWithCheckboxes("Choices", choices=[])
-    # reviews = MultipleFieldWithCheckboxes("Choices", review_types=[0, 1, 2, 3, 4, 5])
-    env_impact = IntegerRangeField('Environmental Impact', default=50)
-    # price = IntegerRangeField('Price', default=100)
+    formSellers = MultipleFieldWithCheckboxes("Sellers", choices=[])
+    reviews = IntegerRangeField("Choices", render_kw={"type": "range", "min": 0, "max": 5}, default=0)
+    env_impact = IntegerRangeField('Environmental Impact', default=100)
+    maxPrice = IntegerRangeField('Price', default=100)
+    minPrice = IntegerRangeField('Price', default=0)
     submit = SubmitField('Submit')
     

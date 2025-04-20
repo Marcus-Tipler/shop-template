@@ -6,48 +6,39 @@
 
 
 {% block content %} 
+<form method="POST" action="/products">
+
     <div class="mft-products">
 
         <div class="mft-product-filters">
             <h2>Filter by:</h2>
             <div class="mft-product-filter">
-                <label for="category">Category:</label>
-                <select id="category" name="category">
-                    <option value="all">All</option>
-                    <option value="CategoryOne">CategoryOneTitle</option>
-                    <option value="CategoryTwo">CategoryOneTwo</option>
-                    <option value="CategoryThree">CategoryOneThree</option>
-                </select>
-
-                <form method="POST" action="/products">
-
-                {{ form.search }}
-                {{ form.choices }}
-
-                {{ form.env_impact.label }} 
-                {{ form.env_impact(oninput="updateSliderValue(this.value)") }}
-                <span id="sliderValue">{{ form.env_impact.data }}</span>
-
+                <label for="sellers">Sellers: </label>
+                {{ form.formSellers }}
+                <br>
+                <label for="env_impact">Carbon Emissions: </label>
+                {{ form.env_impact(oninput="updateEnvSliderValue(this.value)") }}
+                <span id="sliderEnvValue">{{ form.env_impact.data }}</span>
+                <br>
+                <label for="reviews">Reviews: </label>
+                {{ form.reviews(oninput="updateReviewSliderValue(this.value)") }}
+                <span id="sliderReviewsValue">{{ form.reviews.data }}</span>
+                <br>
+                <label for="price">Price: </label>
+                {{ form.minPrice(oninput="updateMinPriceSliderValue(this.value)") }}
+                {{ form.maxPrice(oninput="updateMaxPriceSliderValue(this.value)") }}
+                <span id="sliderMinPriceValue">min: {{ form.minPrice.data }}</span>
+                <span id="sliderMaxPriceValue">max: {{ form.maxPrice.data }}</span>
+                <br>
                 <button>Submit</button>
-
-                </form>
-
-            </div>
-            <div class="mft-product-filter">
-                <label for="price">Price:</label>
-                <select id="price" name="price">
-                    <option value="all">All</option>
-                    <option value="low-to-high">Low to High</option>
-                    <option value="high-to-low">High to Low</option>
-                </select>
             </div>
         </div>
 
         <div class="mft-product-viewfinder">
 
             <div class="mft-product-search">
-                <input type="text" id="search" name="search" placeholder="Search for products...">
-                <button type="submit">Search</button>
+                {{ form.search }}
+                <button>Submit</button>
             </div>
 
             <div class="mft-product-line">
@@ -67,6 +58,8 @@
         </div>
 
     </div>
+
+</form>
 {% endblock %}
 
 {% block scripts %}

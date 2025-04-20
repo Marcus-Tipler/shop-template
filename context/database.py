@@ -12,7 +12,7 @@ class technologies(db.Model):
     name = str
     price = int
     description = str
-    seller = str
+    seller_id = str
     reviews = int
     env_impact = int
 
@@ -20,13 +20,15 @@ class technologies(db.Model):
     name = db.Column("name", db.String(255))
     price = db.Column("price", db.Integer)
     description = db.Column("description", db.Text)
-    seller = db.Column("seller", db.String(255))
     reviews = db.Column("reviews", db.Integer)
     env_impact = db.Column("env_impact", db.Integer)
 
+    seller_id = db.Column("seller_id", db.ForeignKey("sellers.id"), nullable=False)
+    seller = db.relationship("sellers", backref=db.backref("technologies", lazy=True))
+
     def __str__(self):
         return f"{self.name} / {self.price} / {self.description} / {self.seller} / {self.reviews}"
-    
+
 
 @dataclass
 class users(db.Model):
@@ -47,6 +49,19 @@ class users(db.Model):
 
     def __str__(self):
         return f"{self.username} / {self.realname} / {self.surname} / {self.email} / {self.password}"
+
+
+@dataclass
+class sellers(db.Model):
+    __tablename__ = 'sellers'
+    _id = int
+    seller_name = str
+
+    _id = db.Column("id", db.Integer, primary_key=True)
+    seller_name = db.Column("seller_name", db.String(255))
+
+    def __str__(self):
+        return f"{self.seller_name}"
 
 
 @dataclass
