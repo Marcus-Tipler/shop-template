@@ -1,0 +1,6 @@
+.mft-cart {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    background-color: black;
+    padding: 10px;
+}
