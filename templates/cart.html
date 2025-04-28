@@ -1,14 +1,33 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/cart.css') }}">
+{% endblock %}
 
-    {% for item in usercart %}
-    <div class="mft-cart-item">
-        {{item.itemIDs}}
-        {{item.amount}}
-        {{technologies.name}}
+{% block content %}
+<div class="mft-cart">
+
+    <div class="mft-cart-items">
+        <h2 class="mft-cart-title">Your Cart</h2>
+        {% for item in usercart %}
+        <div class="mft-cart-item">
+            {{item.itemIDs}}
+            {{item.amount}}
+            {{item.userID}}
+            {{item._id}}
+            test
+        </div>
+        {% endfor %}
     </div>
 
-    {% endfor %}
+    <div class="mft-cart-summary">
+        <h2 class="mft-cart-title">Cart Summary</h2>
+        <div class="mft-cart-summary-item">
+            <p>Total Items: placeholder</p>
+            <p>Total Price: placeholder</p>
+        </div>
+        <a href="#" class="mft-cart-checkout-button">Checkout</a>
+    </div>
 
+</div>
 {% endblock %}

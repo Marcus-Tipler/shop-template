@@ -25,6 +25,7 @@ from admin.adminUsercarts import adminUsercarts # Imports templates from the Adm
 from context.database import db, technologies, users, usercarts, sellers # Imports blueprints from context folder.
 # from context.handleCart import handleCart
 from context.handleProducts import handleProductForms
+from context.handleCart import handleTest # Imports blueprints from context folder.
 
 
 # ----------------------------------------------------------
@@ -122,6 +123,7 @@ def singleProductPage(techId):
 
 @app.route('/cart/')
 def cartPage():
+    handleTest(g.user, usercarts, session)
     usercart = usercarts.query.filter_by(userID = g.user._id)
     return render_template('cart.html', technologies = technologies.query.all(), usercart = usercart)
 
