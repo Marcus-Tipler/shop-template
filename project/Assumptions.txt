@@ -1,3 +1,6 @@
 In SECTION #2:
 Assumption made that the HOME PAGE can be used to access a PRODUCTS PAGE 
 where all the filtering can be achieved.
+
+Assumption made that i can decide not to use Bootstrap if i prefer to have
+full control over the way my website looks, and demonstrate my creative intent.

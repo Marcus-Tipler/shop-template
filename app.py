@@ -104,6 +104,10 @@ def before_request():
         user = users.query.filter_by(_id = 0).first()
         g.user = user
 
+    # Initialize cart in session if it doesn't exist
+    if 'cart' not in session:
+        session['cart'] = {}  # Initialize as an empty dictionary
+
 class OpinionForm(FlaskForm):
     opinion = StringField('Your Opinion: ',validators = [DataRequired(),Length(min=0,max=100)])
     submit = SubmitField('Submit')
@@ -119,11 +123,13 @@ def galleryPage():
 @app.route('/tech/<int:techId>',methods=['GET','POST'])
 def singleProductPage(techId):
     tech = db.get_or_404(technologies, techId)
+    print(tech)
     return render_template('SingleTech.html', technology = tech)
 
 @app.route('/cart/')
 def cartPage():
-    handleTest(g.user, usercarts, session)
+    cart, totalCost = handleTest(g.user, usercarts, session)
+    print(cart, totalCost)
     usercart = usercarts.query.filter_by(userID = g.user._id)
     return render_template('cart.html', technologies = technologies.query.all(), usercart = usercart)
 
@@ -211,6 +217,11 @@ def page_not_found(error):
 # def testPage():
 #     return render_template('test.html', technologies = technologies.query.all(), usercart = usercarts.query.filter_by(userID = g.user._id))
 
+@app.route('/clear_cart')
+def clear_cart():
+    session.pop('cart', None)  # Remove the cart from the session
+    print("Cart cleared")
+    return redirect(url_for('cartPage'))
 
 # ----------------------------------------------------------
 # Creates parameters for the application to run.
