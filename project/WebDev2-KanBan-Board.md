@@ -22,6 +22,7 @@ kanban-plugin: board
 	Should (additional marks)
 	```
 	AJAX USED FOR PAGE SUMMARY IN FRONT PAGE
+- [ ] Need to add Address, and Card Info to Database: then add this to the cart and checkout pages.
 - [ ] ```java
 	REQUIREMENT
 	```
@@ -50,6 +51,10 @@ kanban-plugin: board
 	BUG
 	```
 	Price on ProductsPage needs increased maximum or replacement to user input based interpretation
+- [ ] ```java
+	BUG
+	```
+	When logging in with cart filled, cart does not parse to newly logged in account.
 
 
 ## Blocked
@@ -57,6 +62,11 @@ kanban-plugin: board
 
 
 ## In progress
+
+- [ ] Commenting on previously made code for handleProducts.py needs to be completed.
+
+
+## PR Ready
 
 - [ ] ```java
 	REQUIREMENT
@@ -72,11 +82,6 @@ kanban-plugin: board
 	The cart should have two segments, a preview section and an overview section.
 	
 	The overview section should add up the prices and show an overview of the purchase. It should also place an address or other information on the user.
-- [ ] Commenting on previously made code for handleProducts.py needs to be completed.
-
-
-## PR Ready
-
 
 
 ## Complete

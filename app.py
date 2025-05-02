@@ -128,19 +128,43 @@ def singleProductPage(techId):
 
 @app.route('/cart/')
 def cartPage():
-    cart, totalCost = updateCartCookie(g.user, usercarts, session, db, technologies)
-    print(cart, totalCost)
+    # Load the cart from the session
+    cart, totalCost = updateCartCookie(g.user, usercarts, session, db, technologies)  # Update the cart in the session with the database
+    session_cart = session.get('cart', {})  # Get the cart from the session, default to an empty dictionary
     usercart = usercarts.query.filter_by(userID = g.user._id)
     totalItems = len(usercart.all())
-    print("TEST1: ", session.get('cart', {}), " \nTEST2: ", usercart)
-    
-    return render_template('cart.html', technologies = technologies.query.all(), usercart = usercart, cartCost = totalCost, cartItems = totalItems)
+    # Process the cart to fetch item details from the database
+    cart_items = []
+    total_cost = 0
+    total_items = 0
+    for item_id_str, quantity in session_cart.items():
+        item_id = int(item_id_str)
+        item = technologies.query.filter_by(_id=item_id).first()  # Fetch item details from the database
+        if item:
+            cart_items.append({
+                'id': item._id,
+                'name': item.name,
+                'price': item.price,
+                'quantity': quantity,
+                'total_price': int(item.price) * int(quantity)
+            })
+            total_cost += int(item.price) * int(quantity)
+            total_items += quantity
+
+
+    # Render the cart page with the processed cart data
+    return render_template(
+        'cart.html',
+        cart_items=cart_items,
+        cartCost=total_cost,
+        cartItems=total_items
+    )
 
 @app.route('/add_to_cart/<int:techId>', methods=['GET', 'POST'])
 def addToCartPage(techId):
     print(g.user._id)
     cart = modifyCart(user_id=g.user._id, item_id=techId, action='add', userCookies=session, db=db, userCart=usercarts)
-    print(cart)
+    print(f"{cart}")
     return redirect(url_for('cartPage'))
 
 @app.route('/remove_from_cart/<int:techId>', methods=['GET', 'POST'])
@@ -205,6 +229,9 @@ def loginPage():
             return render_template('gateway.html') # TODO: If wrong details we need to add a message
     else:
         session['userid'] = 0
+        if session.get('userid') == 0:
+            print("Cart being erased from session")
+            session.pop('cart', None)  # Clear the cart from the session
         session_cookie = encodeFlaskCookie(SECRET_KEY, dict(session))
         return render_template('gateway.html')
 
