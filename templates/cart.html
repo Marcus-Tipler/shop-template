@@ -11,23 +11,38 @@
         <h2 class="mft-cart-title">Your Cart</h2>
         {% for item in usercart %}
         <div class="mft-cart-item">
-            {{item.itemIDs}}
-            {{item.amount}}
-            {{item.userID}}
-            {{item._id}}
-            test
+            <div class="mft-cart-item-left">
+                <img class="mft-cart-item-image" src="{{ url_for('static', filename='assets/images/product-' + item.itemIDs + '.png') }}">
+            </div>
+            <div class="mft-cart-item-middle">
+                <h3>{{ item.itemIDs }}</h3>
+                <p>Price: £{{ item.price }}</p>
+                <p>Quantity: {{ item.amount }}</p>
+            </div>
+            <div class="mft-cart-item-right">
+                <button class="mft-cart-remove-button"><a href="/remove_from_cart/{{ item.itemIDs }}">Remove</a></button>
+            </div>
         </div>
         {% endfor %}
     </div>
 
     <div class="mft-cart-summary">
-        <h2 class="mft-cart-title">Cart Summary</h2>
         <div class="mft-cart-summary-item">
-            <p>Total Items: placeholder</p>
-            <p>Total Price: placeholder</p>
+            <h2 class="mft-cart-title">Cart Summary</h2>
+            <div class="mft-cart-summary-item">
+                <p>Total Items: {{ cartItems }}</p>
+                <p>Total Price: {{ cartCost }}</p>
+            </div>
+            <button class="mft-checkout-btn"><a href="#">Checkout</a></button>
         </div>
-        <a href="#" class="mft-cart-checkout-button">Checkout</a>
     </div>
 
 </div>
 {% endblock %}
+
+
+{{item.itemIDs}}
+{{item.amount}}
+{{item.userID}}
+{{item._id}}
+test
