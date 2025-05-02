@@ -25,7 +25,7 @@ from admin.adminUsercarts import adminUsercarts # Imports templates from the Adm
 from context.database import db, technologies, users, usercarts, sellers # Imports blueprints from context folder.
 # from context.handleCart import handleCart
 from context.handleProducts import handleProductForms
-from context.handleCart import handleTest # Imports blueprints from context folder.
+from context.handleCart import updateCartCookie, modifyCart # Imports blueprints from context folder.
 
 
 # ----------------------------------------------------------
@@ -118,7 +118,7 @@ class OpinionForm(FlaskForm):
 # ----------------------------------------------------------
 @app.route('/')
 def galleryPage():
-    return render_template('index.html', technologies = technologies.query.all())
+    return render_template('index.html', technologies = technologies.query.limit(3).all())
 
 @app.route('/tech/<int:techId>',methods=['GET','POST'])
 def singleProductPage(techId):
@@ -128,10 +128,27 @@ def singleProductPage(techId):
 
 @app.route('/cart/')
 def cartPage():
-    cart, totalCost = handleTest(g.user, usercarts, session)
+    cart, totalCost = updateCartCookie(g.user, usercarts, session, db, technologies)
     print(cart, totalCost)
     usercart = usercarts.query.filter_by(userID = g.user._id)
-    return render_template('cart.html', technologies = technologies.query.all(), usercart = usercart)
+    totalItems = len(usercart.all())
+    print("TEST1: ", session.get('cart', {}), " \nTEST2: ", usercart)
+    
+    return render_template('cart.html', technologies = technologies.query.all(), usercart = usercart, cartCost = totalCost, cartItems = totalItems)
+
+@app.route('/add_to_cart/<int:techId>', methods=['GET', 'POST'])
+def addToCartPage(techId):
+    print(g.user._id)
+    cart = modifyCart(user_id=g.user._id, item_id=techId, action='add', userCookies=session, db=db, userCart=usercarts)
+    print(cart)
+    return redirect(url_for('cartPage'))
+
+@app.route('/remove_from_cart/<int:techId>', methods=['GET', 'POST'])
+def removeFromCartPage(techId):
+    print(g.user._id)
+    cart = modifyCart(user_id=g.user._id, item_id=techId, action='remove', userCookies=session, db=db, userCart=usercarts)
+    print(cart)
+    return redirect(url_for('cartPage'))
 
 @app.route('/products/', methods=['GET', 'POST'])
 def productPage():

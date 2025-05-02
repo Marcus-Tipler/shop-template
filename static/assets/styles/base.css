@@ -133,10 +133,15 @@ body {
 }
 
 .mft-footer {
-    position: absolute;
     display: grid;
     padding: 10px 20px;
     text-align: center;
     bottom: 0;
     width: 100%;
+}
+
+.mft-content-container {
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+    gap: 1px;
 }

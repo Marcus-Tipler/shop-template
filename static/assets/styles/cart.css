@@ -4,3 +4,26 @@
     background-color: black;
     padding: 10px;
 }
+
+.mft-cart-item {
+    display: grid;
+    grid-template-columns: 30% 60% 10%;
+    background-color: black;
+    padding: 10px;
+    background-color: dodgerblue;
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.mft-cart-summary-item {
+    margin: 10px;
+    padding: 10px;
+}
+
+.mft-cart-item-left img {
+    width: 100%;
+    padding: 10px;
+}
+.mft-cart-item-middle {
+    padding: 10px;
+}
