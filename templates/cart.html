@@ -9,21 +9,26 @@
 
     <div class="mft-cart-items">
         <h2 class="mft-cart-title">Your Cart</h2>
-        {% for item in usercart %}
-        <div class="mft-cart-item">
-            <div class="mft-cart-item-left">
-                <img class="mft-cart-item-image" src="{{ url_for('static', filename='assets/images/product-' + item.itemIDs + '.png') }}">
+        {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="mft-cart-item">
+                <div class="mft-cart-item-left">
+                    <img class="mft-cart-item-image" src="{{ url_for('static', filename='assets/images/product-' + item.id|string + '.png') }}">
+                </div>
+                <div class="mft-cart-item-middle">
+                    <h3>{{ item.name }}</h3>
+                    <p>Price: £{{ item.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <p>Total: £{{ item.total_price }}</p>
+                </div>
+                <div class="mft-cart-item-right">
+                    <button class="mft-cart-remove-button"><a href="/remove_from_cart/{{ item.id }}">Remove</a></button>
+                </div>
             </div>
-            <div class="mft-cart-item-middle">
-                <h3>{{ item.itemIDs }}</h3>
-                <p>Price: £{{ item.price }}</p>
-                <p>Quantity: {{ item.amount }}</p>
-            </div>
-            <div class="mft-cart-item-right">
-                <button class="mft-cart-remove-button"><a href="/remove_from_cart/{{ item.itemIDs }}">Remove</a></button>
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
     </div>
 
     <div class="mft-cart-summary">
