@@ -7,17 +7,13 @@ kanban-plugin: board
 ## Backlog
 
 - [ ] ```java
-	Additional
+	Additional (not marked)
 	```
 	Recommendation Algorithm
 - [ ] ```java
 	Additional
 	```
-	ProductsPage should have a page selector and maximise the outputs to page size
-- [ ] ```java
-	REQUIREMENT
-	```
-	Real product photography
+	ProductsPage should have a page selector and maximise the outputs to page size (page number at bottom of page)
 - [ ] ```java
 	Should (additional marks)
 	```
@@ -39,10 +35,6 @@ kanban-plugin: board
 
 ## BUGS
 
-- [ ] ```java
-	BUG
-	```
-	Remove the database parameter in Jinja on Front Page Index.html
 - [ ] ```java
 	BUG
 	```
@@ -68,7 +60,20 @@ kanban-plugin: board
 
 ## PR Ready
 
-- [ ] ```java
+
+
+## Complete
+
+**Complete**
+- [x] ```java
+	REQUIREMENT
+	```
+	Real product photography
+- [x] ```java
+	BUG
+	```
+	Remove the database parameter in Jinja on Front Page Index.html
+- [x] ```java
 	REQUIREMENT
 	```
 	SHOPPING BASKET MUST BE FUNCTIONAL
@@ -82,11 +87,6 @@ kanban-plugin: board
 	The cart should have two segments, a preview section and an overview section.
 	
 	The overview section should add up the prices and show an overview of the purchase. It should also place an address or other information on the user.
-
-
-## Complete
-
-**Complete**
 - [x] ```java
 	REQUIREMENT
 	```

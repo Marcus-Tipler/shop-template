@@ -27,3 +27,19 @@
 .mft-cart-item-middle {
     padding: 10px;
 }
+
+.mft-cart-item-image {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    margin: auto;
+}
+
+.mft-cart-item-left {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    background: white;
+    overflow: hidden;
+    border: 1px solid black;
+}

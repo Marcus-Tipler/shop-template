@@ -24,8 +24,15 @@
 }
 .mft-product-image {
     width: 100%;
+    height: auto;
+    padding: 10px;
+    margin: auto;
 }
 
-.mft_slider {
-    margin: 20px 0;
+.mft-product-image-container {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    background: white;
+    overflow: hidden;
 }
