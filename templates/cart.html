@@ -6,10 +6,9 @@
 
 {% block content %}
 <div class="mft-cart">
-
-    <div class="mft-cart-items">
-        <h2 class="mft-cart-title">Your Cart</h2>
-        {% if cart_items %}
+    {% if cart_items %}
+        <div class="mft-cart-items">
+            <h2 class="mft-cart-title">Your Cart</h2>
             {% for item in cart_items %}
             <div class="mft-cart-item">
                 <div class="mft-cart-item-left">
@@ -26,21 +25,21 @@
                 </div>
             </div>
             {% endfor %}
-        {% else %}
-            <p>Your cart is empty.</p>
-        {% endif %}
-    </div>
-
-    <div class="mft-cart-summary">
-        <div class="mft-cart-summary-item">
-            <h2 class="mft-cart-title">Cart Summary</h2>
-            <div class="mft-cart-summary-item">
-                <p>Total Items: {{ cartItems }}</p>
-                <p>Total Price: {{ cartCost }}</p>
-            </div>
-            <button class="mft-checkout-btn"><a href="#">Checkout</a></button>
         </div>
-    </div>
+
+        <div class="mft-cart-summary">
+            <div class="mft-cart-summary-item">
+                <h2 class="mft-cart-title">Cart Summary</h2>
+                <div class="mft-cart-summary-item">
+                    <p>Total Items: {{ cartItems }}</p>
+                    <p>Total Price: £{{ cartCost }}</p>
+                </div>
+                <button class="mft-checkout-btn"><a href="{{ url_for('checkoutCheckPage') }}">Checkout</a></button>
+            </div>
+        </div>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
 
 </div>
 {% endblock %}

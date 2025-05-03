@@ -197,18 +197,41 @@ def productPage():
         min_price = form.minPrice.data
         max_price = form.maxPrice.data
 
+        print(f"Selected Sellers: {selected_sellers}")
+        print(f"Selected Reviews: {selected_reviews}")
+        print(f"Min Price: {min_price}")
+        print(f"Max Price: {max_price}")
+        print(f"Environmental Impact Threshold: {env_impact_threshold}") # There are issues with this value, this is to debug.
         query = query.filter(
             technologies.seller_id.in_(selected_sellers),
-            technologies.env_impact <= env_impact_threshold,
+            technologies.env_impact <= int(env_impact_threshold),
             technologies.reviews >= selected_reviews,
             technologies.price >= min_price,
             technologies.price <= max_price
         ).all()
+        print(str(query))
         return render_template('products.html', technologies = query, form = form)
     else:
+        # This sets the defaults for the forms so that if the form is not submitted, it shows all products.
         form.formSellers.data = [seller[1] for seller in sellersname]
         form.reviews.data = 0
+        form.env_impact.data = 1000
+        form.minPrice.data = 0
+        form.maxPrice.data = 5000
     return render_template('products.html', technologies = technologies.query.all(), form = form)
+
+@app.route('/checkout/')
+def checkoutPage():
+     return render_template('checkout.html')
+
+@app.route('/checkout_check-if-logged-in/')
+def checkoutCheckPage():
+    # Check if the user is logged in
+    print(f"User ID: {g.user._id}")
+    if int(g.user._id) == 0:
+        return render_template('checkout-confirm.html')
+    else:
+         return redirect(url_for('checkoutPage'))
 
 @app.route('/references/')
 def referencePage():
@@ -226,14 +249,14 @@ def loginPage():
             session_cookie = encodeFlaskCookie(SECRET_KEY, dict(session))
             return redirect(url_for('galleryPage'))
         else:
-            return render_template('gateway.html') # TODO: If wrong details we need to add a message
+            return render_template('gateway.html', user = int(g.user._id)) # TODO: If wrong details we need to add a message
     else:
         session['userid'] = 0
         if session.get('userid') == 0:
             print("Cart being erased from session")
             session.pop('cart', None)  # Clear the cart from the session
         session_cookie = encodeFlaskCookie(SECRET_KEY, dict(session))
-        return render_template('gateway.html')
+        return render_template('gateway.html', user = int(g.user._id))
 
 
 # ----------------------------------------------------------

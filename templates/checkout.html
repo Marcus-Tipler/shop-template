@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/checkout.css') }}">
+{% endblock %}
+
+<!--
+CHECKOUT SYSTEM (plans):
+1. Check if there are items in the cart.
+    2.1. If there are items, check that the user is logged in.
+        2.1.1. If the user is logged in, show the checkout page with the order ID and total amount.
+        2.1.2. If the user is not logged in, show checkout with empty boxes to be filled out.
+    2.2. If there are no items, Error out and go back to homepage.
+
+-->
+{% block content %}
+    <div class="mft-checkout-title">
+        <h1>Verify and Complete your order.</h1>
+    </div>
+    <div class="mft-checkout-container">
+        <div class="mft-checkout-top">
+            <div class="mft-checkout-top-left">
+                <h2>Checkout</h2>
+                <p>Order ID: PLACEHOLDER</p>
+                <p>Total Amount: £PLACEHOLDER</p>
+            </div>
+            <div class="mft-checkout-top-right">
+                <h3>Shipping Address</h3>
+                <p>PLACEHOLDER</p>
+                <h3>Billing Address</h3>
+            </div>
+        </div>
+        <div class="mft-checkout-bottom">
+            <div class="mft-checkout-review">
+                <h3>Payment Method</h3>
+                <p>PLACEHOLDER</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

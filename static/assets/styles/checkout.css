@@ -1,0 +1,24 @@
+.mft-checkout-title h1 {
+    text-align: center;
+    padding: 10px;
+  }
+    
+  .mft-checkout-container {
+    display: grid;
+    grid-template-rows: 70% 30%;
+    background-color: black;
+    padding: 10px;
+  }
+  
+  .mft-checkout-top {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    background-color: black;
+  }
+  
+  .mft-checkout-top-left, .mft-checkout-top-right, .mft-checkout-bottom {
+    background: dodgerblue;
+    padding: 30px;
+    margin: 30px;
+    text-align: center;
+  }

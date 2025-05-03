@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectMultipleField, widgets, IntegerRangeField
+from wtforms import StringField, PasswordField, SubmitField, SelectMultipleField, widgets, IntegerRangeField, IntegerField
 
 
 class MultipleFieldWithCheckboxes(SelectMultipleField):
@@ -10,8 +10,8 @@ class handleProductForms(FlaskForm):
     search = StringField('Search')
     formSellers = MultipleFieldWithCheckboxes("Sellers", choices=[])
     reviews = IntegerRangeField("Choices", render_kw={"type": "range", "min": 0, "max": 5}, default=0)
-    env_impact = IntegerRangeField('Environmental Impact', default=100)
-    maxPrice = IntegerRangeField('Price', default=100)
-    minPrice = IntegerRangeField('Price', default=0)
+    env_impact = IntegerField('Environmental Impact', default=1000)
+    maxPrice = IntegerField('Max Price', default=5000)
+    minPrice = IntegerField('Min Price', default=0)
     submit = SubmitField('Submit')
     
