@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/checkout-confirm.css') }}">
+{% endblock %}
+
+<!--
+CHECKOUT SYSTEM (plans):
+1. Check if there are items in the cart.
+    2.1. If there are items, check that the user is logged in.
+        2.1.1. If the user is logged in, show the checkout page with the order ID and total amount.
+        2.1.2. If the user is not logged in, redirect to options page where they can chose to sign up or fill out information as a guest.
+    2.2. If there are no items, Error out and go back to homepage.
+-->
+{% block content %}
+    <div class="mft-check-title">
+        <h2>Are you sure you'd like to continue as Guest?</h2>
+    </div>
+    <div class="mft-check-container">
+        <div class="mft-check-left">
+            <h3>Continue as 'Guest'</h3>
+            <h5>(not recommended)</h5>
+            <p>You won't be able to log in for up to date information about your shipping.</p>
+            <button class="mft-checkout-btn"><a href="{{ url_for('checkoutPage') }}">Continue as Guest</a></button>
+        </div>
+        <div class="mft-check-right">
+            <h3>Sign Up or Log In</h3>
+            <h5>(recommended)</h5>
+            <p>You'll be able to log in, view your order and contact us if you need support.</p>
+            <button class="mft-checkout-btn"><a href="{{ url_for('loginPage') }}">Sign Up / Login</a></button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

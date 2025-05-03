@@ -19,15 +19,11 @@ kanban-plugin: board
 	```
 	AJAX USED FOR PAGE SUMMARY IN FRONT PAGE
 - [ ] Need to add Address, and Card Info to Database: then add this to the cart and checkout pages.
-- [ ] REMOVE MAGNIFYING GLASS FROM HEADER
+- [ ] Check email capitalisation
 
 
 ## BUGS
 
-- [ ] ```java
-	BUG
-	```
-	Environmental Impact on ProductsPage bugs to value of 0 for value 100
 - [ ] ```java
 	BUG
 	```
@@ -41,14 +37,6 @@ kanban-plugin: board
 ## In progress
 
 - [ ] ```java
-	BUG
-	```
-	Price on ProductsPage needs increased maximum or replacement to user input based interpretation
-- [ ] ```java
-	REQUIREMENT
-	```
-	Store HASHED passwords in Database
-- [ ] ```java
 	REQUIREMENT
 	```
 	CHECKOUT PAGE NEEDS TO BE CREATED
@@ -56,11 +44,29 @@ kanban-plugin: board
 	REQUIREMENT
 	```
 	Card 'Acceptance' forms that just check if entered card details are 16 characters
+- [ ] ```java
+	BUG
+	```
+	Environmental Impact on ProductsPage bugs to value of 0 for value 100
+- [ ] ```java
+	REQUIREMENT
+	```
+	Store HASHED passwords in Database
 - [ ] Commenting on previously made code for handleProducts.py needs to be completed.
 
 
 ## PR Ready
 
+- [ ] ```java
+	BUG
+	```
+	When loading references page, crash occurs
+- [ ] ```java
+	BUG
+	```
+	Price on ProductsPage needs increased maximum or replacement to user input based interpretation
+- [ ] REMOVE MAGNIFYING GLASS FROM HEADER
+- [ ] CSS FOR LOGIN SCREENS
 
 
 ## Complete

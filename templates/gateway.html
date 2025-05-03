@@ -1,12 +1,45 @@
 {% extends "base.html" %}
 
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/gateway.css') }}">
+{% endblock %}
+
 {% block content %}
-<h1>LOG IN</h1>
-<div class="mft-login">
-    <form action="" method="post">
-        <input autocomplete="off" autofocus name="email" placeholder="'Paul@123.com'" type="email" class="mft-login-username">
-        <input autocomplete="off" name="password" placeholder="'Pa55w0rd'" type="password" class="mft-login-password">
-        <button type="submit" class="mft-login-submit">Login</button>
-    </form>
-</div>
+    {% if user == 0 %}
+        <div class="mft-login-title">
+            <h1>Log In or Sign Up</h1>
+        </div>
+        <div class="mft-login-container">
+
+            <div class="mft-section-login">
+                <div class="mft-login-sectitle">
+                    <h2>Log In</h2>
+                </div>
+                <div class="mft-login">
+                    <form action="" method="post">
+                        <br>
+                        <p>Username:</p>
+                        <input autocomplete="off" autofocus name="email" placeholder="'Paul@123.com'" type="email" class="mft-login-username">
+                        <br>
+                        <p>Password:</p>
+                        <input autocomplete="off" name="password" placeholder="'Pa55w0rd'" type="password" class="mft-login-password">
+                        <br>
+                        <p>Logging in allows you to follow up on orders, track packages and contact us in case you need support.</p>
+                        <button type="submit" class="mft-login-submit">Login</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mft-section-signup">
+                <div class="mft-login-sectitle">
+                    <h2>Sign Up</h2>
+                </div>
+            </div> 
+
+        </div>
+    {% else %}
+        <div class="mft-login-title">
+            <h1>Error: You are already logged in.</h1>
+        </div>
+    {% endif %}
 {% endblock %}
