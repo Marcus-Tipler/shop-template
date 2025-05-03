@@ -57,21 +57,21 @@ kanban-plugin: board
 
 ## PR Ready
 
-- [ ] ```java
-	BUG
-	```
-	When loading references page, crash occurs
-- [ ] ```java
-	BUG
-	```
-	Price on ProductsPage needs increased maximum or replacement to user input based interpretation
-- [ ] REMOVE MAGNIFYING GLASS FROM HEADER
-- [ ] CSS FOR LOGIN SCREENS
 
 
 ## Complete
 
 **Complete**
+- [x] CSS FOR LOGIN SCREENS
+- [x] REMOVE MAGNIFYING GLASS FROM HEADER
+- [x] ```java
+	BUG
+	```
+	Price on ProductsPage needs increased maximum or replacement to user input based interpretation
+- [x] ```java
+	BUG
+	```
+	When loading references page, crash occurs
 - [x] ```java
 	REQUIREMENT
 	```

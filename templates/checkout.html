@@ -2,6 +2,7 @@
 
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/checkout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/styles/cart.css') }}">
 {% endblock %}
 
 <!--
@@ -20,20 +21,79 @@ CHECKOUT SYSTEM (plans):
     <div class="mft-checkout-container">
         <div class="mft-checkout-top">
             <div class="mft-checkout-top-left">
-                <h2>Checkout</h2>
-                <p>Order ID: PLACEHOLDER</p>
-                <p>Total Amount: £PLACEHOLDER</p>
+                <h2>Basic Info</h2>
+                {% if logged_in %}
+                    <h4>Customer name*: {{ user.name }}</h4>
+                    <h4>Customer email*: {{ user.email }}</h4>
+                    <h4>Customer phone: {{ user.phone }}</h4>
+                    <br>
+                    <h2>Address</h2>
+                    <h4>Customer postcode*: {{ user.postcode }}</h4>
+                    <h4>Customer address*: {{ user.address }}</h4>
+                    <h4>Customer city*: {{ user.city }}</h4>
+                    <h4>Customer country*: {{ user.country }}</h4>
+                    <h4>Customer state: {{ user.state }}</h4>
+                    <br>
+                    <h2>Payment Method</h2>
+                    <h4>Cardholder name*: {{ cardholder_name }}</h4>
+                    <h4>Card number*: {{ payment_method }}</h4>
+                    <h4>Card expiry date*: {{ card_expiry }}</h4>
+                    <h4>Card CVV*: {{ card_cvv }}</h4>
+                {% else %}
+                    <form method="POST" action="{{ url_for('checkoutPage') }}">
+                        <h4>Customer name*: <input type="text" name="name" placeholder="Enter your name" required></h4>
+                        <h4>Customer email*: <input type="email" name="email" placeholder="Enter your email" required></h4>
+                        <h4>Customer phone: <input type="text" name="phone" placeholder="Enter your phone"></h4>
+                        <br>
+                        <h2>Address</h2>
+                        <h4>Customer postcode*: <input type="text" name="postcode" placeholder="Enter your postcode" required></h4>
+                        <h4>Customer address*: <input type="text" name="address" placeholder="Enter your address" required></h4>
+                        <h4>Customer city*: <input type="text" name="city" placeholder="Enter your city" required></h4>
+                        <h4>Customer country*: <input type="text" name="country" placeholder="Enter your country" required></h4>
+                        <h4>Customer state: <input type="text" name="state" placeholder="Enter your state"></h4>
+                        <br>
+                        <h2>Payment Method</h2>
+                        <h4>Cardholder name*: <input type="text" name="cardholder_name" placeholder="Enter cardholder name" required></h4>
+                        <h4>Card number*: <input type="text" name="payment_method" placeholder="Enter card number" required></h4>
+                        <h4>Card expiry date*: <input type="text" name="card_expiry" placeholder="MM/YY" required></h4>
+                        <h4>Card CVV*: <input type="text" name="card_cvv" placeholder="Enter card CVV" required></h4>
+                        <br>
+                        <p>As you are a Guest user, please fill out the above information before continuing with your purchase. It is still recommended to <a href="{{ url_for('loginPage') }}">Sign Up / Log In</a> before continuing.</p>
+                        <button type="submit">Submit</button>
+                    </form>
+                {% endif %}
             </div>
             <div class="mft-checkout-top-right">
-                <h3>Shipping Address</h3>
-                <p>PLACEHOLDER</p>
-                <h3>Billing Address</h3>
+                <h2>Summary</h2>
+                {% if logged_in %}
+                    <h4>Order ID: {{ order_id }}</h4>
+                {% endif %}
+                <h4>Total Items: {{ total_items }}</h4>
+                <h4>Total Amount: £{{ total_cost }}</h4>
+                <button class="mft-checkout-btn"><a href="#">Buy Now</a></button>
             </div>
         </div>
         <div class="mft-checkout-bottom">
             <div class="mft-checkout-review">
-                <h3>Payment Method</h3>
-                <p>PLACEHOLDER</p>
+                <h2>Cart Overview</h2>
+                <div class="mft-cart-items">
+                    {% for item in cart_items %}
+                    <div class="mft-cart-item">
+                        <div class="mft-cart-item-left">
+                            <img class="mft-cart-item-image" src="{{ url_for('static', filename='assets/images/product-' + item.id|string + '.png') }}">
+                        </div>
+                        <div class="mft-cart-item-middle">
+                            <h3>{{ item.name }}</h3>
+                            <p>Price: £{{ item.price }}</p>
+                            <p>Quantity: {{ item.quantity }}</p>
+                            <p>Total: £{{ item.total_price }}</p>
+                        </div>
+                        <div class="mft-cart-item-right">
+                            <button class="mft-cart-remove-button"><a href="/remove_from_cart/{{ item.id }}">Remove</a></button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>

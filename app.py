@@ -222,7 +222,68 @@ def productPage():
 
 @app.route('/checkout/')
 def checkoutPage():
-     return render_template('checkout.html')
+    # Check if there are items in the cart
+    session_cart = session.get('cart', {})
+    if not session_cart:
+        # If the cart is empty, redirect to the homepage with an error message
+        print("Cart is empty. Redirecting to homepage.")
+        return redirect(url_for('galleryPage'))
+
+    # Calculate the total cost of the cart
+    total_cost = 0
+    total_items = 0
+    for item_id_str, quantity in session_cart.items():
+        item_id = int(item_id_str)
+        item = technologies.query.filter_by(_id=item_id).first()
+        if item:
+            total_cost += int(item.price) * int(quantity)
+            total_items += quantity
+
+    # Load cart from session in to understandable format for the template.
+    cart_items = []
+    total_cost = 0
+    total_items = 0
+    for item_id_str, quantity in session_cart.items():
+        item_id = int(item_id_str)
+        item = technologies.query.filter_by(_id=item_id).first()  # Fetch item details from the database
+        if item:
+            cart_items.append({
+                'id': item._id,
+                'name': item.name,
+                'price': item.price,
+                'quantity': quantity,
+                'total_price': int(item.price) * int(quantity)
+            })
+            total_cost += int(item.price) * int(quantity)
+            total_items += quantity
+
+    # Check if the user is logged in
+    if int(g.user._id) == 0:
+        # If the user is not logged in, show checkout with empty boxes to be filled out
+        return render_template(
+            'checkout.html',
+            logged_in=False,
+            cart=session_cart,
+            total_cost=total_cost,
+            total_items=total_items,
+            cart_items=cart_items,
+            cartCost=total_cost,
+            cartItems=total_items
+        )
+    else:
+        # If the user is logged in, show the checkout page with the order ID and total amount
+        order_id = f"ORD-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"  # Generate a unique order ID
+        return render_template(
+            'checkout.html',
+            logged_in=True,
+            order_id=order_id,
+            total_cost=total_cost,
+            total_items=total_items,
+            user=g.user,
+            cart_items=cart_items,
+            cartCost=total_cost,
+            cartItems=total_items
+        )
 
 @app.route('/checkout_check-if-logged-in/')
 def checkoutCheckPage():
