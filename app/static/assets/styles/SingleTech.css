@@ -1,0 +1,22 @@
+.mft-product-container {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    background-color: black;
+    padding: 10px;
+}
+  
+.mft-product-top {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    background-color: black;
+}
+  
+.mft-product-left, .mft-product-right, .mft-product-bottom {
+    background: dodgerblue;
+    padding: 10px;
+    margin: 10px;
+}
+
+.mft-product-img {
+  width: 100%;
+}
