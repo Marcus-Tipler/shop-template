@@ -82,3 +82,56 @@ class usercarts(db.Model):
 
     def __str__(self):
         return f"{self.amount}"
+    
+
+@dataclass
+class userAddress(db.Model):
+    __tablename__ = 'userAddress'
+    _id = int
+    userID = int
+    phone = str
+    postcode = str
+    address_line1 = str
+    city = str
+    country = str
+    state = str
+
+    _id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
+    phone = db.Column("phone", db.String(20), nullable=True)
+    postcode = db.Column("postcode", db.String(20), nullable=False)
+    address_line1 = db.Column("address_line1", db.String(255), nullable=False)
+    city = db.Column("city", db.String(100), nullable=False)
+    country = db.Column("country", db.String(100), nullable=False)
+    state = db.Column("state", db.String(100), nullable=True)
+
+    userID = db.Column("userid", db.Integer, db.ForeignKey("users.ID"), nullable=False)
+    user = db.relationship("users", backref=db.backref("userAddress", lazy=True))
+
+    def __str__(self):
+        return f"{self.address_line1}, {self.city}, {self.state}, {self.country}, {self.postcode}, {self.phone}"
+
+
+@dataclass
+class userBanking(db.Model):
+    __tablename__ = 'userBanking'
+    _id = int
+    userID = int
+    cardholder_name = str
+    card_number = str
+    cvv = str
+    expiry_date = str
+    billing_address_id = int
+
+    _id = db.Column("id", db.Integer, primary_key=True, autoincrement=True)
+    cardholder_name = db.Column("cardholder_name", db.String(255), nullable=False)
+    card_number = db.Column("card_number", db.String(16), nullable=False)
+    cvv = db.Column("cvv", db.String(4), nullable=False)
+    expiry_date = db.Column("expiry_date", db.String(7), nullable=False)  # Format: MM/YYYY
+
+    userID = db.Column("userid", db.Integer, db.ForeignKey("users.ID"), nullable=False)
+    user = db.relationship("users", backref=db.backref("userBanking", lazy=True))
+    billing_address_id = db.Column("billing_address_id", db.Integer, db.ForeignKey("userAddress.id"), nullable=False)
+    billing_address = db.relationship("userAddress", backref=db.backref("userBanking", lazy=True))
+
+    def __str__(self):
+        return f"Cardholder: {self.cardholder_name}, Card: **** **** **** {self.card_number[-4:]}, Expiry: {self.expiry_date}"

@@ -53,6 +53,7 @@ kanban-plugin: board
 	```
 	Store HASHED passwords in Database
 - [ ] Commenting on previously made code for handleProducts.py needs to be completed.
+- [ ] Basket button in individual items menu
 
 
 ## PR Ready
