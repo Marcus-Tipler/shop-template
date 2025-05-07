@@ -25,7 +25,7 @@ RUN chmod -R g+w /usr/src/app/instance
 
 # Define the command to run when the container starts
 # CMD python app.py
-
+RUN pip install --no-cache-dir -r requirements.txt
 # To change the server to Gunicorn, comment out the line above, and uncomment this one:
 CMD gunicorn --bind 0.0.0.0:5000 app:app
 
