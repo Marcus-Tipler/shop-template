@@ -24,8 +24,8 @@ WORKDIR /usr/src/app
 RUN chmod -R g+w /usr/src/app/instance
 
 # Define the command to run when the container starts
-CMD python app.py
+# CMD python app.py
 
 # To change the server to Gunicorn, comment out the line above, and uncomment this one:
-# CMD gunicorn --bind 0.0.0.0:5000 app:app
+CMD gunicorn --bind 0.0.0.0:5000 app:app
 
