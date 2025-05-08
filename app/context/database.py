@@ -40,12 +40,12 @@ class users(db.Model):
     email = str
     password = str
 
-    _id = db.Column("ID", db.Integer, primary_key=True)
-    username = db.Column("Username", db.String(255))
-    realname = db.Column("Name", db.String(255))
-    surname = db.Column("Surname", db.String(255))
-    email = db.Column("Email", db.String(255))
-    password = db.Column("Password", db.Text)
+    _id = db.Column("ID", db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    username = db.Column("Username", db.String(255), nullable=False)
+    realname = db.Column("Name", db.String(255), nullable=False)
+    surname = db.Column("Surname", db.String(255), nullable=False)
+    email = db.Column("Email", db.String(255), nullable=False)
+    password = db.Column("Password", db.Text, nullable=False)
 
     def __str__(self):
         return f"{self.username} / {self.realname} / {self.surname} / {self.email} / {self.password}"

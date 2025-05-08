@@ -1,0 +1,8 @@
+ID,Username,Name,Surname,Email,Password
+NULL,Guest,Guest,Guest,None,None
+NULL,joe123,John,Doe,johndoe@example.com,pbkdf2:sha256:1000000$JosUEBlplZaQIHYG$37dbb5cce894a743cd4d4ec87521ba15ff62d470cfef834b32157bd77293019b
+NULL,sarah456,Sarah,Smith,sarahsmith@example.com,pbkdf2:sha256:1000000$JosUEBlplZaQIHYG$37dbb5cce894a743cd4d4ec87521ba15ff62d470cfef834b32157bd77293019b
+NULL,bob789,Robert,Johnson,robertjohnson@example.com,pbkdf2:sha256:1000000$JosUEBlplZaQIHYG$37dbb5cce894a743cd4d4ec87521ba15ff62d470cfef834b32157bd77293019b
+NULL,emma234,Emma,Lee,emmalee@example.com,pbkdf2:sha256:1000000$JosUEBlplZaQIHYG$37dbb5cce894a743cd4d4ec87521ba15ff62d470cfef834b32157bd77293019b
+NULL,tom567,Tom,Davis,tomdavis@example.com,pbkdf2:sha256:1000000$JosUEBlplZaQIHYG$37dbb5cce894a743cd4d4ec87521ba15ff62d470cfef834b32157bd77293019b
+NULL,marcu,Marcus,TIPLER,tiplermf@cardiff.ac.uk,pbkdf2:sha256:1000000$JosUEBlplZaQIHYG$37dbb5cce894a743cd4d4ec87521ba15ff62d470cfe1
