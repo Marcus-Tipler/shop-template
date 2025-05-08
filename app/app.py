@@ -12,16 +12,16 @@ import os
 from flask.sessions import SecureCookieSessionInterface
 from itsdangerous import URLSafeTimedSerializer
 import datetime
-from flask_admin import Admin
+# from flask_admin import Admin
 from weasyprint import HTML
 
 
 # ----------------------------------------------------------
 # Importing all of the assets made for this Flask Project.
 # ----------------------------------------------------------
-from admin.adminTechnologies import adminTechnologies # Imports templates from the Admin Folder
-from admin.adminUsers import adminUsers # Imports templates from the Admin Folder
-from admin.adminUsercarts import adminUsercarts # Imports templates from the Admin Folder
+# from admin.adminTechnologies import adminTechnologies # Imports templates from the Admin Folder
+# from admin.adminUsers import adminUsers # Imports templates from the Admin Folder
+# from admin.adminUsercarts import adminUsercarts # Imports templates from the Admin Folder
 from context.database import db, technologies, users, usercarts, sellers # Imports blueprints from context folder.
 # from context.handleCart import handleCart
 from context.handleProducts import handleProductForms
@@ -38,7 +38,7 @@ SECRET_KEY = "top_secret_password_dont_tell_anyone_this"
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
+# app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 
 # ----------------------------------------------------------
 # Initializing db from the database.py in the context folder.
@@ -49,10 +49,10 @@ db.init_app(app)
 # ----------------------------------------------------------
 # Setting up Flask Admin for managing of the database.
 # ----------------------------------------------------------
-admin = Admin(app, name='Database Admin', template_mode='bootstrap4')
-admin.add_view(adminTechnologies(technologies, db.session))
-admin.add_view(adminUsers(users, db.session))
-admin.add_view(adminUsercarts(usercarts, db.session))
+# admin = Admin(app, name='Database Admin', template_mode='bootstrap4')
+# admin.add_view(adminTechnologies(technologies, db.session))
+# admin.add_view(adminUsers(users, db.session))
+# admin.add_view(adminUsercarts(usercarts, db.session))
 
 
 # ----------------------------------------------------------
