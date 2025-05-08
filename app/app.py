@@ -12,6 +12,7 @@ import os
 from flask.sessions import SecureCookieSessionInterface
 from itsdangerous import URLSafeTimedSerializer
 import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 # from flask_admin import Admin
 # from weasyprint import HTML
 
@@ -301,24 +302,59 @@ def referencePage():
 @app.route('/gateway/', methods=['GET', 'POST'])
 def loginPage():
     if request.method == 'POST':
-        session.pop('userid', None)
+        session.pop('userid', None)  # Remove the user ID from the session
         email = request.form['email']
         password = request.form['password']
-        user = users.query.filter_by(email=email, password=password).first()
-        if user:
+        
+        # Query the user by email
+        user = users.query.filter_by(email=email).first()
+        
+        print(f"User: {user}")
+        print(f"Password: {password}")
+        print(f"Hashed Password: {user.password}")
+        print(f"Boolean Check: {check_password_hash(user.password, password)}")
+        if user and check_password_hash(user.password, password):
+            # If the user exists and the password matches, log them in
             session['userid'] = user._id
             session_cookie = encodeFlaskCookie(SECRET_KEY, dict(session))
             return redirect(url_for('galleryPage'))
         else:
-            return render_template('gateway.html', user = int(g.user._id)) # TODO: If wrong details we need to add a message
+            # If login fails, render the login page with an error message
+            return render_template('gateway.html', user=int(g.user._id), error="Invalid email or password")
     else:
         session['userid'] = 0
         if session.get('userid') == 0:
             print("Cart being erased from session")
             session.pop('cart', None)  # Clear the cart from the session
         session_cookie = encodeFlaskCookie(SECRET_KEY, dict(session))
-        return render_template('gateway.html', user = int(g.user._id))
+        return render_template('gateway.html', user=int(g.user._id))
+    
+@app.route('/register/', methods=['GET', 'POST'])
+def registerPage():
+    if request.method == 'POST':
+        # Get form data
+        username = request.form['username']
+        name = request.form['name']
+        surname = request.form['surname']
+        email = request.form['email']
+        password = request.form['password']
 
+        # Hash the password
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
+
+        # Create a new user with the provided data
+        new_user = users(
+            username=username,
+            realname=name,
+            surname=surname,
+            email=email,
+            password=hashed_password
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for('loginPage'))
+    return render_template('register.html', user=int(g.user._id))
 
 # ----------------------------------------------------------
 # Error handling for Catastrophic fails on the Flask Project.
