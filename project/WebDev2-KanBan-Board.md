@@ -14,11 +14,6 @@ kanban-plugin: board
 	Additional
 	```
 	ProductsPage should have a page selector and maximise the outputs to page size (page number at bottom of page)
-- [ ] ```java
-	Should (additional marks)
-	```
-	AJAX USED FOR PAGE SUMMARY IN FRONT PAGE
-- [ ] Need to add Address, and Card Info to Database: then add this to the cart and checkout pages.
 - [ ] Check email capitalisation
 
 
@@ -48,15 +43,20 @@ kanban-plugin: board
 	BUG
 	```
 	Environmental Impact on ProductsPage bugs to value of 0 for value 100
-- [ ] ```java
-	REQUIREMENT
-	```
-	Store HASHED passwords in Database
 - [ ] Commenting on previously made code for handleProducts.py needs to be completed.
 
 
 ## PR Ready
 
+- [ ] Need to add Address, and Card Info to Database: then add this to the cart and checkout pages.
+- [ ] ```java
+	Should (additional marks)
+	```
+	AJAX USED FOR PAGE SUMMARY IN FRONT PAGE
+- [ ] ```java
+	REQUIREMENT
+	```
+	Store HASHED passwords in Database
 - [ ] Basket button in individual items menu
 
 

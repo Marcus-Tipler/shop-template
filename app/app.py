@@ -97,7 +97,7 @@ def encodeFlaskCookie(secret_key, cookieDict):
 @app.before_request
 def before_request():
     session.permanent = True
-    app.permanent_session_lifetime = datetime.timedelta(minutes=1440) # session will be alive for 20 minutes
+    app.permanent_session_lifetime = datetime.timedelta(minutes=1440) # session will be alive for 20 minutes (please change if needed)
     if 'userid' in session:
         user = users.query.filter_by(_id = session.get('userid')).first()
         g.user = user
@@ -299,7 +299,7 @@ def referencePage():
 def loginPage():
     if request.method == 'POST':
         session.pop('userid', None)  # Remove the user ID from the session
-        email = request.form['email']
+        email = request.form['email'].strip().lower()
         password = request.form['password']
         
         # Query the user by email
@@ -332,7 +332,7 @@ def registerPage():
         username = request.form['username']
         name = request.form['name']
         surname = request.form['surname']
-        email = request.form['email']
+        email = request.form['email'].strip().lower()
         password = request.form['password']
 
         # Hash the password
