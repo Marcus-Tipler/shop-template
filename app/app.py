@@ -124,7 +124,7 @@ def galleryPage():
 def singleProductPage(techId):
     tech = db.get_or_404(technologies, techId)
     print(tech)
-    return render_template('SingleTech.html', technology = tech)
+    return render_template('SingleTech.html', technology = tech, techID = techId)
 
 @app.route('/cart/')
 def cartPage():
