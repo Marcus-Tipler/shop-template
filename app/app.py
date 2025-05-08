@@ -23,7 +23,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # from admin.adminTechnologies import adminTechnologies # Imports templates from the Admin Folder
 # from admin.adminUsers import adminUsers # Imports templates from the Admin Folder
 # from admin.adminUsercarts import adminUsercarts # Imports templates from the Admin Folder
-from context.database import db, technologies, users, usercarts, sellers # Imports blueprints from context folder.
+from context.database import db, technologies, users, usercarts, sellers, userAddress, userBanking # Imports blueprints from context folder.
 # from context.handleCart import handleCart
 from context.handleProducts import handleProductForms
 from context.handleCart import updateCartCookie, modifyCart # Imports blueprints from context folder.
@@ -233,20 +233,10 @@ def checkoutPage():
     # Calculate the total cost of the cart
     total_cost = 0
     total_items = 0
+    cart_items = []
     for item_id_str, quantity in session_cart.items():
         item_id = int(item_id_str)
         item = technologies.query.filter_by(_id=item_id).first()
-        if item:
-            total_cost += int(item.price) * int(quantity)
-            total_items += quantity
-
-    # Load cart from session in to understandable format for the template.
-    cart_items = []
-    total_cost = 0
-    total_items = 0
-    for item_id_str, quantity in session_cart.items():
-        item_id = int(item_id_str)
-        item = technologies.query.filter_by(_id=item_id).first()  # Fetch item details from the database
         if item:
             cart_items.append({
                 'id': item._id,
@@ -272,6 +262,10 @@ def checkoutPage():
             cartItems=total_items
         )
     else:
+        # Fetch user address and banking details
+        user_address = userAddress.query.filter_by(userID=g.user._id).first()
+        user_banking = userBanking.query.filter_by(userID=g.user._id).first()
+
         # If the user is logged in, show the checkout page with the order ID and total amount
         order_id = f"ORD-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"  # Generate a unique order ID
         return render_template(
@@ -283,7 +277,9 @@ def checkoutPage():
             user=g.user,
             cart_items=cart_items,
             cartCost=total_cost,
-            cartItems=total_items
+            cartItems=total_items,
+            user_address=user_address,
+            user_banking=user_banking
         )
 
 @app.route('/checkout_check-if-logged-in/')
@@ -356,6 +352,25 @@ def registerPage():
         return redirect(url_for('loginPage'))
     return render_template('register.html', user=int(g.user._id))
 
+@app.route('/api/item/<int:techId>', methods=['GET'])
+def getItemDetails(techId):
+    # Fetch the item from the database
+    item = technologies.query.filter_by(_id=techId).first()
+    if item:
+        # Return item details as JSON
+        return {
+            'id': item._id,
+            'name': item.name,
+            'description': item.description,
+            'price': item.price,
+            'reviews': item.reviews,
+            'env_impact': item.env_impact
+        }
+    else:
+        # Return an error if the item is not found
+        return {'error': 'Item not found'}, 404
+    
+    
 # ----------------------------------------------------------
 # Error handling for Catastrophic fails on the Flask Project.
 # ----------------------------------------------------------

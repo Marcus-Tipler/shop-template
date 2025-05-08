@@ -119,7 +119,7 @@ def modifyCart(user_id, item_id, action, userCookies, db, userCart):
     userCookies['cart'] = cart
 
     # Update the database to reflect the changes
-    print(f"THE USER ID IS {user_id.strip()}")
+    # print(f"THE USER ID IS {user_id.strip()}")
     if int(user_id) != 0: 
         print("Updating Cart Database LINE 124")
         updateCartDatabase(userCookies, userCart, user_id, db)
