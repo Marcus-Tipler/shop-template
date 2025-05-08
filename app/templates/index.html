@@ -41,7 +41,7 @@
         </div>
         {% for tech in technologies %}
             {% set id = tech._id | int %}
-                <div class="mft-product" id="product-{{tech._id}}" onclick="location.href='/tech/{{tech._id}}';" style="cursor: pointer;">
+                <div class="mft-product" id="product-{{tech._id}}" data-id="{{ tech._id }}" onclick="location.href='/tech/{{tech._id}}';" style="cursor: pointer;">
                     <div class="mft-product-image-container">
                         <img class="mft-product-image" src="{{ url_for('static', filename='assets/images/product-' + tech._id + '.png')}}">
                     </div>
@@ -53,8 +53,17 @@
                 </div>
         {% endfor %}
     </div>
+
+    <div id="item-summary" class="item-summary" style="display: none;">
+        <h3 id="summary-name"></h3>
+        <p id="summary-description"></p>
+        <p id="summary-price"></p>
+        <p id="summary-reviews"></p>
+        <p id="summary-env-impact"></p>
+    </div>
 {% endblock %}
 
 {% block scripts %}
 <script type="text/javascript" src="{{ url_for('static', filename='assets/scripts/carousel.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='assets/scripts/index.js') }}"></script>
 {% endblock %}
