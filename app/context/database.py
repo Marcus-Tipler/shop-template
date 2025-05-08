@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, url_for, redirect, make_response, session, g
 from flask_sqlalchemy import SQLAlchemy
 from dataclasses import dataclass
-from flask_admin import Admin
+# from flask_admin import Admin
 
 db = SQLAlchemy()
 
